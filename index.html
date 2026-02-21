@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Digital Draft - Identity-Linked Value</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style type="text/tailwindcss">
+        :root {
+            --primary: #0df259;
+            --cyan-glow: #06b6d4;
+            --obsidian: #030405;
+            --midnight: #050a08;
+            --emerald-electric: #00ff66;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --neon-blue: #00f0ff;
+        }
+        @layer base {
+            body {
+                @apply bg-[var(--obsidian)] text-slate-100 font-display antialiased selection:bg-[var(--emerald-electric)] selection:text-black;
+                background-image: 
+                    radial-gradient(circle at 50% 0%, #0a1f16 0%, transparent 60%),
+                    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            }
+        }
+        .perspective-deep {
+            perspective: 2000px;
+        }
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }.digital-twin-container {
+            transform-style: preserve-3d;
+            animation: float-hero 8s ease-in-out infinite;
+        }
+        .hologram-face {
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(0, 240, 255, 0.2), transparent 20%),
+                conic-gradient(from 0deg at 50% 50%, rgba(0, 255, 102, 0.1) 0deg, transparent 60deg, rgba(0, 240, 255, 0.1) 120deg, transparent 180deg);
+            mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 20 C60 20 30 50 30 100 C30 160 60 190 100 190 C140 190 170 160 170 100 C170 50 140 20 100 20 Z' fill='black'/%3E%3C/svg%3E");
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 102, 0.3));
+        }
+        .hologram-grid {
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(0, 255, 102, .2) 25%, rgba(0, 255, 102, .2) 26%, transparent 27%, transparent 74%, rgba(0, 255, 102, .2) 75%, rgba(0, 255, 102, .2) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(0, 255, 102, .2) 25%, rgba(0, 255, 102, .2) 26%, transparent 27%, transparent 74%, rgba(0, 255, 102, .2) 75%, rgba(0, 255, 102, .2) 76%, transparent 77%, transparent);
+            background-size: 30px 30px;
+            mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 20 C60 20 30 50 30 100 C30 160 60 190 100 190 C140 190 170 160 170 100 C170 50 140 20 100 20 Z' fill='black'/%3E%3C/svg%3E");
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+        }
+        .volumetric-laser {
+            background: linear-gradient(180deg, rgba(0, 255, 102, 0) 0%, rgba(0, 255, 102, 0.8) 50%, rgba(0, 255, 102, 0) 100%);
+            box-shadow: 0 0 40px 10px rgba(0, 255, 102, 0.3);
+            filter: blur(2px);
+            opacity: 0.8;
+            animation: scan-vertical 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        @keyframes scan-vertical {
+            0%, 100% { top: 0%; opacity: 0; transform: scaleX(0.8); }
+            10% { opacity: 1; transform: scaleX(1); }
+            50% { opacity: 0.8; }
+            90% { opacity: 1; transform: scaleX(1); }
+            100% { top: 100%; opacity: 0; transform: scaleX(0.8); }
+        }.text-glow-linear {
+            background: linear-gradient(to right, #ffffff, #bbf7d0, #0df259);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(13, 242, 89, 0.2);
+        }
+        .text-glow-cyan {
+            background: linear-gradient(to right, #ffffff, #a5f3fc, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(6, 182, 212, 0.2);
+        }.glass-monolith {
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+            box-shadow: 
+                0 20px 40px -10px rgba(0, 0, 0, 0.5),
+                inset 0 0 30px rgba(255, 255, 255, 0.02);
+            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .glass-monolith:hover {
+            transform: translateY(-15px) rotateX(5deg) scale(1.02);
+            box-shadow: 
+                0 40px 60px -10px rgba(0, 0, 0, 0.6),
+                inset 0 0 50px rgba(13, 242, 89, 0.05);
+            border-color: rgba(13, 242, 89, 0.3);
+        }
+        .glass-monolith::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+        .glass-monolith:hover::before {
+            transform: translateX(100%);
+        }.icon-3d-wrapper {
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+        .glass-monolith:hover .icon-3d-wrapper {
+            transform: translateZ(50px) rotateY(20deg);
+        }
+        .icon-layer {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }.globe-wireframe {
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            box-shadow: inset 0 0 60px rgba(6, 182, 212, 0.2);
+            animation: pulse-globe 4s ease-in-out infinite;
+        }
+        .node-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--neon-blue);
+            cursor: crosshair;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .node-point:hover {
+            transform: scale(2.5);
+            background: var(--emerald-electric);
+            box-shadow: 0 0 30px var(--emerald-electric);
+            z-index: 50;
+        }
+        .node-point:hover::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            border: 1px solid rgba(13, 242, 89, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            animation: ripple 1s ease-out infinite;
+        }
+        .data-stream {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--emerald-electric), transparent);
+            opacity: 0;
+            transform-origin: left;
+            transition: opacity 0.3s;
+        }
+        .node-point:hover ~ .data-stream {
+            opacity: 1;
+            animation: stream-flow 0.5s linear infinite;
+        }
+        @keyframes ripple { to { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+        @keyframes stream-flow { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+        @keyframes float-hero { 
+            0%, 100% { transform: translateY(0) rotateX(0); } 
+            50% { transform: translateY(-10px) rotateX(2deg); } 
+        }
+        @keyframes pulse-globe {
+            0%, 100% { box-shadow: inset 0 0 60px rgba(6, 182, 212, 0.2); }
+            50% { box-shadow: inset 0 0 100px rgba(6, 182, 212, 0.3); }
+        }
+        .scroll-parallax-bg {
+            background-image: radial-gradient(circle at 50% 50%, rgba(13, 242, 89, 0.05) 2px, transparent 2px);
+            background-size: 60px 60px;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    colors: {
+                        emerald: {
+                            950: '#022c22',
+                        },
+                        obsidian: '#030405',
+                        neon: {
+                            green: '#00ff66',
+                            blue: '#00f0ff'
+                        }
+                    }
+                },
+            }
+        }
+    </script>
+</head>
+
+<body class="overflow-x-hidden antialiased bg-obsidian">
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div
+            class="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-emerald-900/10 rounded-full blur-[150px] mix-blend-screen animate-pulse duration-[10s]">
+        </div>
+        <div
+            class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-cyan-900/10 rounded-full blur-[150px] mix-blend-screen">
+        </div>
+        <div class="absolute inset-0 scroll-parallax-bg opacity-30"></div>
+    </div>
+    <header
+        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl border-b border-white/5 bg-obsidian/60 px-6 py-4 lg:py-6">
+        <div class="mx-auto max-w-screen-2xl flex items-center justify-between">
+            <div class="flex items-center gap-3 group cursor-pointer">
+                <div class="relative h-10 w-10 flex items-center justify-center">
+                    <div
+                        class="absolute inset-0 bg-emerald-500/20 rounded-lg blur-md group-hover:blur-lg transition-all">
+                    </div>
+                    <div
+                        class="relative h-full w-full flex items-center justify-center rounded-lg bg-black/40 border border-emerald-500/40 text-emerald-400 group-hover:scale-105 transition-transform">
+                        <span class="material-symbols-outlined text-2xl">fingerprint</span>
+                    </div>
+                </div>
+                <h1
+                    class="text-xl font-bold tracking-tight text-white uppercase group-hover:text-emerald-400 transition-colors">
+                    Digital Draft</h1>
+            </div>
+            <nav class="hidden lg:flex items-center gap-10">
+                <a class="text-xs font-semibold uppercase tracking-widest text-slate-400 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all"
+                    href="#">Ecosystem</a>
+                <a class="text-xs font-semibold uppercase tracking-widest text-slate-400 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all"
+                    href="#">Protocol</a>
+                <a class="text-xs font-semibold uppercase tracking-widest text-slate-400 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all"
+                    href="#">Security</a>
+                <a class="text-xs font-semibold uppercase tracking-widest text-slate-400 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] transition-all"
+                    href="#">Governance</a>
+            </nav>
+            <div class="flex items-center gap-6">
+                <button class="relative group px-6 py-2.5 rounded-lg overflow-hidden">
+                    <div
+                        class="absolute inset-0 bg-white/5 border border-white/10 group-hover:border-emerald-500/50 transition-colors rounded-lg">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-emerald-500/10 opacity-0 group-hover:opacity-100 blur-xl transition-opacity">
+                    </div>
+                    <span
+                        class="relative text-sm font-bold text-white group-hover:text-emerald-300 transition-colors flex items-center gap-2">
+                        Connect Identity
+                        <span
+                            class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_#0df259]"></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="relative z-10 perspective-deep">
+        <section class="min-h-[85vh] flex items-center pt-24 px-6 lg:px-8 relative overflow-hidden">
+            <div class="mx-auto max-w-screen-2xl w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                <div class="lg:col-span-7 flex flex-col gap-10 relative z-20">
+                    <div
+                        class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-cyan-950/20 border border-cyan-500/30 w-fit backdrop-blur-md shadow-[0_0_30px_rgba(6,182,212,0.15)] group hover:border-cyan-400/60 transition-colors cursor-default">
+                        <span class="relative flex h-2 w-2">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                        </span>
+                        <span
+                            class="text-xs font-bold text-cyan-400 uppercase tracking-widest group-hover:text-cyan-300">Biometric
+                            Consensus Active</span>
+                    </div>
+                    <div class="space-y-6">
+                        <h2
+                            class="text-7xl xl:text-9xl font-bold text-white leading-[0.9] tracking-tighter drop-shadow-2xl">
+                            Identity <br />
+                            <span class="text-glow-linear">Linked Value.</span>
+                        </h2>
+                        <p
+                            class="text-xl text-slate-400 max-w-xl leading-relaxed font-light border-l-2 border-white/10 pl-6">
+                            Every Digital Draft is cryptographically linked to your verified identity, ensuring absolute
+                            security and institutional trust through live biometric validation.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-6 pt-8">
+                        <button
+                            class="group relative flex h-14 items-center gap-3 rounded-xl bg-white text-black px-8 text-base font-bold transition-all hover:scale-105 hover:shadow-[0_0_50px_rgba(255,255,255,0.3)] overflow-hidden">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-emerald-400 to-cyan-400 opacity-0 group-hover:opacity-20 transition-opacity">
+                            </div>
+                            <span
+                                class="material-symbols-outlined transition-transform group-hover:-translate-y-1">fingerprint</span>
+                            Create Secure ID
+                        </button>
+                        <button
+                            class="group flex h-14 items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-8 text-base font-bold text-white hover:bg-white/10 hover:border-white/30 transition-all backdrop-blur-md">
+                            <span
+                                class="material-symbols-outlined group-hover:rotate-90 transition-transform">play_circle</span>
+                            How it works
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-3 gap-12 pt-16 border-t border-white/5 mt-8">
+                        <div class="group cursor-default">
+                            <p
+                                class="text-4xl font-bold text-white font-mono group-hover:text-emerald-400 transition-colors">
+                                2.4s</p>
+                            <div
+                                class="h-0.5 w-8 bg-white/20 mt-2 mb-2 group-hover:w-full group-hover:bg-emerald-500/50 transition-all duration-500">
+                            </div>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest group-hover:text-slate-300">
+                                Finality
+                                Time</p>
+                        </div>
+                        <div class="group cursor-default">
+                            <p
+                                class="text-4xl font-bold text-white font-mono group-hover:text-emerald-400 transition-colors">
+                                99.9%</p>
+                            <div
+                                class="h-0.5 w-8 bg-white/20 mt-2 mb-2 group-hover:w-full group-hover:bg-emerald-500/50 transition-all duration-500">
+                            </div>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest group-hover:text-slate-300">
+                                KYC
+                                Accuracy</p>
+                        </div>
+                        <div class="group cursor-default">
+                            <p
+                                class="text-4xl font-bold text-white font-mono group-hover:text-emerald-400 transition-colors">
+                                0.00</p>
+                            <div
+                                class="h-0.5 w-8 bg-white/20 mt-2 mb-2 group-hover:w-full group-hover:bg-emerald-500/50 transition-all duration-500">
+                            </div>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest group-hover:text-slate-300">
+                                Identity
+                                Fraud</p>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="lg:col-span-5 relative h-[500px] lg:h-[600px] scale-75 lg:scale-90 flex items-center justify-center digital-twin-container group">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-b from-emerald-500/10 via-cyan-500/5 to-transparent blur-[80px] rounded-full opacity-60 animate-pulse">
+                    </div>
+                    <div
+                        class="absolute w-[650px] h-[650px] border border-white/5 rounded-full animate-[spin_30s_linear_infinite] group-hover:border-emerald-500/20 transition-colors">
+                    </div>
+                    <div
+                        class="absolute w-[500px] h-[500px] border border-dashed border-cyan-500/20 rounded-full animate-[spin_20s_linear_infinite_reverse]">
+                    </div>
+                    <div
+                        class="absolute w-[700px] h-[700px] border border-white/5 rounded-full border-t-transparent rotate-45">
+                    </div>
+                    <div
+                        class="absolute top-20 right-0 z-30 transform translate-z-10 animate-bounce [animation-duration:6s]">
+                        <div
+                            class="glass-monolith px-4 py-2 rounded-lg border border-cyan-500/30 flex items-center gap-3">
+                            <div class="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
+                            <span class="text-xs font-mono text-cyan-200">IRIS_SCAN: 99.8% MATCH</span>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute bottom-32 left-0 z-30 transform translate-z-20 animate-bounce [animation-duration:8s]">
+                        <div
+                            class="glass-monolith px-4 py-2 rounded-lg border border-emerald-500/30 flex items-center gap-3">
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                            <span class="text-xs font-mono text-emerald-200">NEURAL_HASH: 0x72...9A</span>
+                        </div>
+                    </div>
+                    <div class="relative w-[400px] h-[500px] z-20 preserve-3d transition-transform duration-300 ease-out"
+                        id="head-container">
+                        <div class="absolute inset-0 hologram-face opacity-80 mix-blend-screen scale-110"></div>
+                        <div class="absolute inset-0 hologram-grid opacity-40 mix-blend-overlay"></div>
+                        <div
+                            class="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full shadow-[0_0_10px_white] animate-ping">
+                        </div>
+                        <div
+                            class="absolute bottom-1/3 right-1/4 w-1 h-1 bg-cyan-400 rounded-full shadow-[0_0_10px_cyan] animate-ping [animation-delay:1s]">
+                        </div>
+                        <div class="absolute left-[-20%] right-[-20%] h-1 volumetric-laser z-40"></div>
+                        <div
+                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-emerald-500/20 rounded-full blur-xl animate-pulse">
+                        </div>
+                        <div
+                            class="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-2 px-5 py-2 bg-black/60 border border-emerald-500/50 rounded-full shadow-[0_0_30px_rgba(16,185,129,0.4)] backdrop-blur-xl z-50 hover:scale-105 transition-transform cursor-pointer">
+                            <span class="material-symbols-outlined text-emerald-400 text-lg">verified</span>
+                            <span class="text-xs font-bold text-white tracking-widest">VERIFIED ENTITY</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-12 border-y border-white/5 bg-black/40 backdrop-blur-md overflow-hidden relative z-20">
+            <div
+                class="absolute inset-0 bg-gradient-to-r from-[var(--obsidian)] via-transparent to-[var(--obsidian)] z-10 pointer-events-none">
+            </div>
+            <div class="flex w-[200%] animate-[scroll_40s_linear_infinite] hover:[animation-play-state:paused]">
+                <div
+                    class="flex items-center gap-24 px-12 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 w-1/2 justify-around">
+                    <div class="flex items-center gap-3 text-2xl group"><span
+                            class="material-symbols-outlined text-4xl group-hover:text-white transition-colors">account_balance</span><span
+                            class="font-bold tracking-tight text-white">METRO BANK</span></div>
+                    <div class="flex items-center gap-3 text-2xl group"><span
+                            class="material-symbols-outlined text-4xl group-hover:text-white transition-colors">assured_workload</span><span
+                            class="font-bold tracking-tight text-white">FEDERAL CAP</span></div>
+                    <div class="flex items-center gap-3 text-2xl group"><span
+                            class="material-symbols-outlined text-4xl group-hover:text-white transition-colors">payments</span><span
+                            class="font-bold tracking-tight text-white">VALOR GRP</span></div>
+                    <div class="flex items-center gap-3 text-2xl group"><span
+                            class="material-symbols-outlined text-4xl group-hover:text-white transition-colors">corporate_fare</span><span
+                            class="font-bold tracking-tight text-white">QUANTUM INT</span></div>
+                    <div class="flex items-center gap-3 text-2xl group"><span
+                            class="material-symbols-outlined text-4xl group-hover:text-white transition-colors">domain</span><span
+                            class="font-bold tracking-tight text-white">NEXUS CAP</span></div>
+                </div>
+                <div
+                    class="flex items-center gap-24 px-12 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 w-1/2 justify-around">
+                    <div class="flex items-center gap-3 text-2xl group"><span
+                            class="material-symbols-outlined text-4xl group-hover:text-white transition-colors">account_balance</span><span
+                            class="font-bold tracking-tight text-white">METRO BANK</span></div>
+                    <div class="flex items-center gap-3 text-2xl group"><span
+                            class="material-symbols-outlined text-4xl group-hover:text-white transition-colors">assured_workload</span><span
+                            class="font-bold tracking-tight text-white">FEDERAL CAP</span></div>
+                    <div class="flex items-center gap-3 text-2xl group"><span
+                            class="material-symbols-outlined text-4xl group-hover:text-white transition-colors">payments</span><span
+                            class="font-bold tracking-tight text-white">VALOR GRP</span></div>
+                    <div class="flex items-center gap-3 text-2xl group"><span
+                            class="material-symbols-outlined text-4xl group-hover:text-white transition-colors">corporate_fare</span><span
+                            class="font-bold tracking-tight text-white">QUANTUM INT</span></div>
+                    <div class="flex items-center gap-3 text-2xl group"><span
+                            class="material-symbols-outlined text-4xl group-hover:text-white transition-colors">domain</span><span
+                            class="font-bold tracking-tight text-white">NEXUS CAP</span></div>
+                </div>
+            </div>
+        </section>
+        <section class="py-16 lg:py-24 px-6 relative z-10" id="core-pillars">
+            <div class="mx-auto max-w-screen-2xl">
+                <div class="mb-16 text-center space-y-4">
+                    <h3 class="text-5xl font-bold text-white tracking-tight">The Core System</h3>
+                    <p class="text-slate-400 max-w-2xl mx-auto text-lg">Our foundation is built on three essential
+                        requirements
+                        for modern institutional finance.</p>
+                </div>
+
+                <div class="glass-monolith rounded-3xl p-4 md:p-6 overflow-hidden relative">
+                    <!-- Background Effects -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none">
+                    </div>
+                    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] mix-blend-screen transition-colors duration-700"
+                        id="pillar-glow"></div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 relative z-10">
+                        <!-- Navigation / Tabs -->
+                        <div class="lg:col-span-4 flex flex-row lg:flex-col gap-3 lg:gap-4 justify-start lg:justify-center overflow-x-auto pb-4 lg:pb-0 snap-x snap-mandatory hide-scrollbar w-full min-w-0"
+                            style="scrollbar-width: none; -webkit-overflow-scrolling: touch;">
+                            <!-- Tab 1 -->
+                            <button
+                                class="pillar-tab w-[85vw] sm:w-[280px] lg:w-full lg:max-w-none flex-shrink-0 snap-center active group relative p-4 lg:p-6 text-left rounded-2xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all overflow-hidden"
+                                data-target="pillar-identity" data-color="emerald">
+                                <div
+                                    class="absolute left-0 top-0 bottom-0 w-1 bg-emerald-400 tab-indicator transition-all duration-300">
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-emerald-400/10 opacity-100 group-hover:opacity-100 tab-bg transition-opacity duration-300">
+                                </div>
+                                <div class="relative z-10 flex items-center gap-3 lg:gap-4">
+                                    <div
+                                        class="h-10 w-10 lg:h-12 lg:w-12 shrink-0 rounded-xl bg-black/50 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] tab-icon transition-all">
+                                        <span class="material-symbols-outlined text-xl lg:text-2xl">badge</span>
+                                    </div>
+                                    <div class="truncate">
+                                        <h4
+                                            class="text-base lg:text-xl font-bold text-white mb-0.5 lg:mb-1 group-hover:text-emerald-300 transition-colors tab-title truncate">
+                                            Identity First</h4>
+                                        <div
+                                            class="text-[10px] lg:text-xs text-emerald-400 font-mono tracking-widest uppercase opacity-100 tab-subtitle transition-all">
+                                            System Active</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <!-- Tab 2 -->
+                            <button
+                                class="pillar-tab w-[85vw] sm:w-[280px] lg:w-full lg:max-w-none flex-shrink-0 snap-center group relative p-4 lg:p-6 text-left rounded-2xl border border-white/5 bg-transparent hover:bg-white/5 transition-all overflow-hidden"
+                                data-target="pillar-scalable" data-color="cyan">
+                                <div
+                                    class="absolute left-0 top-0 bottom-0 w-1 bg-cyan-400 tab-indicator opacity-0 transition-all duration-300 scale-y-0 origin-center">
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-cyan-400/10 opacity-0 group-hover:opacity-10 transition-opacity duration-300 tab-bg">
+                                </div>
+                                <div class="relative z-10 flex items-center gap-3 lg:gap-4">
+                                    <div
+                                        class="h-10 w-10 lg:h-12 lg:w-12 shrink-0 rounded-xl bg-black/50 border border-white/10 flex items-center justify-center text-slate-400 group-hover:text-cyan-400 group-hover:border-cyan-500/30 transition-all tab-icon">
+                                        <span class="material-symbols-outlined text-xl lg:text-2xl">layers</span>
+                                    </div>
+                                    <div class="truncate">
+                                        <h4
+                                            class="text-base lg:text-xl font-bold text-slate-300 mb-0.5 lg:mb-1 group-hover:text-cyan-300 transition-colors tab-title truncate">
+                                            Hyper-Scalability</h4>
+                                        <div
+                                            class="text-[10px] lg:text-xs text-slate-500 font-mono tracking-widest uppercase tab-subtitle transition-all opacity-0">
+                                            System Standby</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <!-- Tab 3 -->
+                            <button
+                                class="pillar-tab w-[85vw] sm:w-[280px] lg:w-full lg:max-w-none flex-shrink-0 snap-center group relative p-4 lg:p-6 text-left rounded-2xl border border-white/5 bg-transparent hover:bg-white/5 transition-all overflow-hidden"
+                                data-target="pillar-transparent" data-color="purple">
+                                <div
+                                    class="absolute left-0 top-0 bottom-0 w-1 bg-purple-400 tab-indicator opacity-0 transition-all duration-300 scale-y-0 origin-center">
+                                </div>
+                                <div
+                                    class="absolute inset-0 bg-purple-400/10 opacity-0 group-hover:opacity-10 transition-opacity duration-300 tab-bg">
+                                </div>
+                                <div class="relative z-10 flex items-center gap-3 lg:gap-4">
+                                    <div
+                                        class="h-10 w-10 lg:h-12 lg:w-12 shrink-0 rounded-xl bg-black/50 border border-white/10 flex items-center justify-center text-slate-400 group-hover:text-purple-400 group-hover:border-purple-500/30 transition-all tab-icon">
+                                        <span class="material-symbols-outlined text-xl lg:text-2xl">visibility</span>
+                                    </div>
+                                    <div class="truncate">
+                                        <h4
+                                            class="text-base lg:text-xl font-bold text-slate-300 mb-0.5 lg:mb-1 group-hover:text-purple-300 transition-colors tab-title truncate">
+                                            Transparency</h4>
+                                        <div
+                                            class="text-[10px] lg:text-xs text-slate-500 font-mono tracking-widest uppercase tab-subtitle transition-all opacity-0">
+                                            System Standby</div>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+
+                        <!-- Content Display -->
+                        <div
+                            class="lg:col-span-8 relative rounded-2xl bg-black/40 border border-white/5 overflow-hidden grid items-stretch min-h-[350px] lg:min-h-[350px]">
+                            <div class="absolute inset-0 opacity-20 pointer-events-none"
+                                style="background-image: radial-gradient(rgba(255,255,255,0.2) 1px, transparent 1px); background-size: 20px 20px; z-index: 0;">
+                            </div>
+
+                            <!-- Content 1: Identity -->
+                            <div class="pillar-content active relative z-10 p-5 sm:p-6 md:p-8 lg:p-12 flex flex-col justify-center transition-all duration-500 opacity-100 translate-y-0"
+                                id="pillar-identity" style="grid-area: 1/1;">
+                                <div class="flex items-center gap-3 mb-4 lg:mb-6 mt-2 lg:mt-0">
+                                    <span
+                                        class="px-2 py-1 rounded bg-emerald-500/20 text-emerald-400 text-[10px] lg:text-xs font-mono border border-emerald-500/30 whitespace-nowrap">MODULE_01</span>
+                                    <div class="h-px flex-1 bg-gradient-to-r from-emerald-500/50 to-transparent"></div>
+                                </div>
+                                <h3
+                                    class="text-[1.35rem] sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 lg:mb-6 leading-tight">
+                                    Absolute
+                                    Identity Verification</h3>
+                                <p
+                                    class="text-sm md:text-base lg:text-lg text-slate-400 leading-relaxed mb-6 lg:mb-8 max-w-2xl">
+                                    Rigorous KYC/AML
+                                    integration ensures every actor on the network is fully verified and permissioned.
+                                    Biometric consensus protocols eliminate synthetic identities completely.</p>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4 mt-auto mb-4 lg:mb-0">
+                                    <div
+                                        class="bg-black/50 border border-emerald-500/20 p-3 lg:p-4 rounded-xl flex items-center gap-3 lg:gap-4 backdrop-blur-md">
+                                        <div
+                                            class="w-10 lg:w-12 h-10 lg:h-12 shrink-0 rounded-full border-2 border-emerald-500/50 flex items-center justify-center border-t-emerald-400 animate-spin">
+                                            <span
+                                                class="material-symbols-outlined text-emerald-400 animate-none text-xl lg:text-2xl">fingerprint</span>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-bold text-white">KYC Level 3</div>
+                                            <div class="text-[10px] lg:text-xs text-emerald-400 font-mono">ACTIVE</div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="bg-black/50 border border-emerald-500/20 p-3 lg:p-4 rounded-xl flex items-center gap-3 lg:gap-4 backdrop-blur-md">
+                                        <div
+                                            class="w-10 lg:w-12 h-10 lg:h-12 shrink-0 rounded-full bg-emerald-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                                            <span
+                                                class="material-symbols-outlined text-emerald-400 text-xl lg:text-2xl">verified_user</span>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-bold text-white">Zero Fraud</div>
+                                            <div class="text-[10px] lg:text-xs text-emerald-400 font-mono">GUARANTEED
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Content 2: Scalability -->
+                            <div class="pillar-content pointer-events-none relative z-10 p-5 sm:p-6 md:p-8 lg:p-12 flex flex-col justify-center transition-all duration-500 opacity-0 translate-y-8"
+                                id="pillar-scalable" style="grid-area: 1/1;">
+                                <div class="flex items-center gap-3 mb-4 lg:mb-6 mt-2 lg:mt-0">
+                                    <span
+                                        class="px-2 py-1 rounded bg-cyan-500/20 text-cyan-400 text-[10px] lg:text-xs font-mono border border-cyan-500/30 whitespace-nowrap">MODULE_02</span>
+                                    <div class="h-px flex-1 bg-gradient-to-r from-cyan-500/50 to-transparent"></div>
+                                </div>
+                                <h3
+                                    class="text-[1.35rem] sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 lg:mb-6 leading-tight">
+                                    Infinite
+                                    Throughput</h3>
+                                <p
+                                    class="text-sm md:text-base lg:text-lg text-slate-400 leading-relaxed mb-6 lg:mb-8 max-w-2xl">
+                                    Process millions of
+                                    drafts instantly. High throughput with deterministic finality for any transaction
+                                    volume. Our sharded architecture scales linearly with demand.</p>
+
+                                <div
+                                    class="mt-auto relative h-24 sm:h-28 lg:h-32 w-full flex items-end gap-1.5 lg:gap-2 px-1 sm:px-4 pb-2 lg:pb-4 mb-2 lg:mb-0">
+                                    <!-- Animated Bar Chart -->
+                                    <div
+                                        class="w-full h-[20%] bg-cyan-500/20 rounded-t-sm hover:h-[40%] transition-all duration-300">
+                                    </div>
+                                    <div
+                                        class="w-full h-[40%] bg-cyan-500/30 rounded-t-sm hover:h-[60%] transition-all duration-300">
+                                    </div>
+                                    <div
+                                        class="w-full h-[30%] bg-cyan-500/40 rounded-t-sm hover:h-[50%] transition-all duration-300">
+                                    </div>
+                                    <div
+                                        class="w-full h-[70%] bg-cyan-500/60 rounded-t-sm hover:h-[90%] transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.4)]">
+                                    </div>
+                                    <div
+                                        class="w-full h-[50%] bg-cyan-500/50 rounded-t-sm hover:h-[70%] transition-all duration-300">
+                                    </div>
+                                    <div
+                                        class="w-full h-[90%] bg-cyan-400 rounded-t-sm hover:h-[100%] transition-all duration-300 shadow-[0_0_20px_rgba(6,182,212,0.6)] animate-pulse">
+                                    </div>
+                                    <div
+                                        class="w-full h-[60%] bg-cyan-500/70 rounded-t-sm hover:h-[80%] transition-all duration-300">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Content 3: Transparency -->
+                            <div class="pillar-content pointer-events-none relative z-10 p-5 sm:p-6 md:p-8 lg:p-12 flex flex-col justify-center transition-all duration-500 opacity-0 translate-y-8"
+                                id="pillar-transparent" style="grid-area: 1/1;">
+                                <div class="flex items-center gap-3 mb-4 lg:mb-6 mt-2 lg:mt-0">
+                                    <span
+                                        class="px-2 py-1 rounded bg-purple-500/20 text-purple-400 text-[10px] lg:text-xs font-mono border border-purple-500/30 whitespace-nowrap">MODULE_03</span>
+                                    <div class="h-px flex-1 bg-gradient-to-r from-purple-500/50 to-transparent"></div>
+                                </div>
+                                <h3
+                                    class="text-[1.35rem] sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 lg:mb-6 leading-tight">
+                                    Cryptographic Ledger</h3>
+                                <p
+                                    class="text-sm md:text-base lg:text-lg text-slate-400 leading-relaxed mb-6 lg:mb-8 max-w-2xl">
+                                    Publicly verifiable,
+                                    on-chain audits of every action. Every draft leaves a cryptographically solid trail
+                                    that can be verified by any participating node instantly.</p>
+
+                                <div class="mt-auto flex flex-col gap-2.5 lg:gap-3 mb-2 lg:mb-0">
+                                    <div
+                                        class="flex items-center justify-between p-2 lg:p-3 rounded-lg bg-black/40 border border-purple-500/20">
+                                        <div class="flex items-center gap-2 lg:gap-3">
+                                            <span class="material-symbols-outlined text-purple-400">data_object</span>
+                                            <span
+                                                class="text-[10px] sm:text-xs xl:text-sm text-slate-300 font-mono">TX_HASH:
+                                                0x8f4...2a1b</span>
+                                        </div>
+                                        <span
+                                            class="text-[10px] lg:text-xs text-purple-400 font-bold px-2 py-1 bg-purple-500/10 rounded">VERIFIED</span>
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-between p-2 lg:p-3 rounded-lg bg-black/40 border border-purple-500/20">
+                                        <div class="flex items-center gap-2 lg:gap-3">
+                                            <span class="material-symbols-outlined text-purple-400">data_object</span>
+                                            <span
+                                                class="text-[10px] sm:text-xs xl:text-sm text-slate-300 font-mono">TX_HASH:
+                                                0x3c9...7d4e</span>
+                                        </div>
+                                        <span
+                                            class="text-[10px] lg:text-xs text-purple-400 font-bold px-2 py-1 bg-purple-500/10 rounded">VERIFIED</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Genesis Flow Section (Interactive Accordion) -->
+        <section class="py-16 lg:py-24 px-6 relative" id="genesis-flow">
+            <div class="mx-auto max-w-screen-2xl relative z-10">
+                <div class="mb-16 text-center space-y-4">
+                    <h3 class="text-4xl md:text-6xl font-bold text-white tracking-tight">The Genesis Flow</h3>
+                    <p class="text-slate-400 max-w-2xl mx-auto text-lg md:text-xl">
+                        Interact with the modules to explore how absolute trust is manufactured.
+                    </p>
+                </div>
+
+                <!-- Interactive Expansion Accordion -->
+                <div class="flex flex-col lg:flex-row w-full h-[600px] lg:h-[500px] gap-2 lg:gap-4 genesis-accordion">
+
+                    <!-- Slice 1: KYC -->
+                    <div class="genesis-slice active relative flex-1 basis-0 rounded-3xl border border-white/10 bg-black/60 overflow-hidden cursor-pointer transition-all duration-[800ms] ease-in-out group"
+                        data-step="1">
+                        <!-- Default Collapsed View -->
+                        <div
+                            class="absolute inset-x-0 top-0 bottom-0 p-4 lg:p-6 flex flex-row lg:flex-col items-center justify-start lg:justify-center gap-4 transition-opacity duration-500 slice-collapsed z-20">
+                            <div
+                                class="w-12 h-12 rounded-full border border-slate-700 bg-slate-900 flex items-center justify-center shrink-0 group-[.active]:border-emerald-500 group-[.active]:bg-emerald-500/10 transition-colors">
+                                <span
+                                    class="material-symbols-outlined text-slate-500 group-[.active]:text-emerald-400 transition-colors">fingerprint</span>
+                            </div>
+                            <h4
+                                class="text-white font-bold text-lg lg:text-xl tracking-widest uppercase lg:-rotate-180 lg:[writing-mode:vertical-rl] whitespace-nowrap opacity-100 group-[.active]:opacity-0 transition-opacity">
+                                KYC Genesis</h4>
+                        </div>
+
+                        <!-- Expanded Content View -->
+                        <div
+                            class="absolute inset-0 opacity-0 group-[.active]:opacity-100 pointer-events-none group-[.active]:pointer-events-auto transition-opacity duration-[800ms] p-6 lg:p-12 flex flex-col justify-end z-10">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-emerald-900/80 via-black/50 to-transparent -z-10">
+                            </div>
+                            <span
+                                class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] lg:text-[20rem] text-emerald-500/10 -z-10 group-[.active]:animate-pulse">fingerprint</span>
+
+                            <div
+                                class="relative z-10 transform translate-y-8 group-[.active]:translate-y-0 transition-transform duration-[800ms]">
+                                <div
+                                    class="w-16 h-1 bg-emerald-500 mb-6 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]">
+                                </div>
+                                <h3 class="text-3xl lg:text-5xl font-bold text-white mb-4">KYC Genesis</h3>
+                                <p class="text-emerald-50/70 text-base lg:text-lg max-w-md">Identity is verified using
+                                    biometric and institutional-grade protocols. We establish absolute cryptographic
+                                    certainty before any action is permitted.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slice 2: Minting -->
+                    <div class="genesis-slice relative flex-1 basis-0 rounded-3xl border border-white/10 bg-black/60 overflow-hidden cursor-pointer transition-all duration-[800ms] ease-in-out group"
+                        data-step="2">
+                        <!-- Default Collapsed View -->
+                        <div
+                            class="absolute inset-x-0 top-0 bottom-0 p-4 lg:p-6 flex flex-row lg:flex-col items-center justify-start lg:justify-center gap-4 transition-opacity duration-500 slice-collapsed z-20">
+                            <div
+                                class="w-12 h-12 rounded-full border border-slate-700 bg-slate-900 flex items-center justify-center shrink-0 group-[.active]:border-cyan-400 group-[.active]:bg-cyan-400/10 transition-colors">
+                                <span
+                                    class="material-symbols-outlined text-slate-500 group-[.active]:text-cyan-400 transition-colors">token</span>
+                            </div>
+                            <h4
+                                class="text-white font-bold text-lg lg:text-xl tracking-widest uppercase lg:-rotate-180 lg:[writing-mode:vertical-rl] whitespace-nowrap opacity-100 group-[.active]:opacity-0 transition-opacity">
+                                Token Minting</h4>
+                        </div>
+
+                        <!-- Expanded Content View -->
+                        <div
+                            class="absolute inset-0 opacity-0 group-[.active]:opacity-100 pointer-events-none group-[.active]:pointer-events-auto transition-opacity duration-[800ms] p-6 lg:p-12 flex flex-col justify-end z-10">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-cyan-900/80 via-black/50 to-transparent -z-10">
+                            </div>
+
+                            <div
+                                class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 -z-10 opacity-0 group-[.active]:opacity-100 transition-opacity duration-1000 delay-300">
+                                <div
+                                    class="w-full h-full border-2 border-cyan-500/30 rounded-full absolute animate-[spin_10s_linear_infinite]">
+                                </div>
+                                <div
+                                    class="w-full h-full border-2 border-dashed border-cyan-400/50 rounded-full absolute scale-75 animate-[spin_15s_linear_infinite_reverse]">
+                                </div>
+                                <span
+                                    class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[8rem] text-cyan-500/20">token</span>
+                            </div>
+
+                            <div
+                                class="relative z-10 transform translate-y-8 group-[.active]:translate-y-0 transition-transform duration-[800ms]">
+                                <div
+                                    class="w-16 h-1 bg-cyan-400 mb-6 rounded-full shadow-[0_0_15px_rgba(34,211,238,0.5)]">
+                                </div>
+                                <h3 class="text-3xl lg:text-5xl font-bold text-white mb-4">Token Minting</h3>
+                                <p class="text-cyan-50/70 text-base lg:text-lg max-w-md">A non-transferable primitive
+                                    token is minted directly to the verified wallet, acting as the foundation for all
+                                    future automated drafts.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slice 3: Draft -->
+                    <div class="genesis-slice relative flex-1 basis-0 rounded-3xl border border-white/10 bg-black/60 overflow-hidden cursor-pointer transition-all duration-[800ms] ease-in-out group"
+                        data-step="3">
+                        <!-- Default Collapsed View -->
+                        <div
+                            class="absolute inset-x-0 top-0 bottom-0 p-4 lg:p-6 flex flex-row lg:flex-col items-center justify-start lg:justify-center gap-4 transition-opacity duration-500 slice-collapsed z-20">
+                            <div
+                                class="w-12 h-12 rounded-full border border-slate-700 bg-slate-900 flex items-center justify-center shrink-0 group-[.active]:border-purple-500 group-[.active]:bg-purple-500/10 transition-colors">
+                                <span
+                                    class="material-symbols-outlined text-slate-500 group-[.active]:text-purple-400 transition-colors">receipt_long</span>
+                            </div>
+                            <h4
+                                class="text-white font-bold text-lg lg:text-xl tracking-widest uppercase lg:-rotate-180 lg:[writing-mode:vertical-rl] whitespace-nowrap opacity-100 group-[.active]:opacity-0 transition-opacity">
+                                Inst. Draft</h4>
+                        </div>
+
+                        <!-- Expanded Content View -->
+                        <div
+                            class="absolute inset-0 opacity-0 group-[.active]:opacity-100 pointer-events-none group-[.active]:pointer-events-auto transition-opacity duration-[800ms] p-6 lg:p-12 flex flex-col justify-end z-10">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-purple-900/80 via-black/50 to-transparent -z-10">
+                            </div>
+
+                            <!-- Matrix Rain effect simplified -->
+                            <div
+                                class="absolute top-0 bottom-1/2 left-0 right-0 overflow-hidden -z-10 opacity-0 group-[.active]:opacity-30 transition-opacity duration-1000 delay-300 flex justify-around">
+                                <div
+                                    class="w-px h-full bg-gradient-to-b from-transparent to-purple-500 animate-[slideDown_2s_linear_infinite]">
+                                </div>
+                                <div
+                                    class="w-px h-full bg-gradient-to-b from-transparent to-purple-500 animate-[slideDown_3s_linear_infinite_0.5s]">
+                                </div>
+                                <div
+                                    class="w-px h-full bg-gradient-to-b from-transparent to-purple-500 animate-[slideDown_2.5s_linear_infinite_1s]">
+                                </div>
+                                <div
+                                    class="w-px h-full bg-gradient-to-b from-transparent to-purple-500 animate-[slideDown_1.8s_linear_infinite_0.2s]">
+                                </div>
+                            </div>
+                            <span
+                                class="material-symbols-outlined absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] lg:text-[20rem] text-purple-500/10 -z-10">receipt_long</span>
+
+                            <div
+                                class="relative z-10 transform translate-y-8 group-[.active]:translate-y-0 transition-transform duration-[800ms]">
+                                <div
+                                    class="w-16 h-1 bg-purple-500 mb-6 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.5)]">
+                                </div>
+                                <h3 class="text-3xl lg:text-5xl font-bold text-white mb-4">Institutional Draft</h3>
+                                <p class="text-purple-50/70 text-base lg:text-lg max-w-md">Digital drafts are executed
+                                    with deterministic finality and transparent routing across our global banking mesh
+                                    network.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slice 4: Finality -->
+                    <div class="genesis-slice relative flex-1 basis-0 rounded-3xl border border-white/10 bg-black/60 overflow-hidden cursor-pointer transition-all duration-[800ms] ease-in-out group"
+                        data-step="4">
+                        <!-- Default Collapsed View -->
+                        <div
+                            class="absolute inset-x-0 top-0 bottom-0 p-4 lg:p-6 flex flex-row lg:flex-col items-center justify-start lg:justify-center gap-4 transition-opacity duration-500 slice-collapsed z-20">
+                            <div
+                                class="w-12 h-12 rounded-full border border-slate-700 bg-slate-900 flex items-center justify-center shrink-0 group-[.active]:border-blue-500 group-[.active]:bg-blue-500/10 transition-colors">
+                                <span
+                                    class="material-symbols-outlined text-slate-500 group-[.active]:text-blue-400 transition-colors">account_balance</span>
+                            </div>
+                            <h4
+                                class="text-white font-bold text-lg lg:text-xl tracking-widest uppercase lg:-rotate-180 lg:[writing-mode:vertical-rl] whitespace-nowrap opacity-100 group-[.active]:opacity-0 transition-opacity">
+                                Ledger Finality</h4>
+                        </div>
+
+                        <!-- Expanded Content View -->
+                        <div
+                            class="absolute inset-0 opacity-0 group-[.active]:opacity-100 pointer-events-none group-[.active]:pointer-events-auto transition-opacity duration-[800ms] p-6 lg:p-12 flex flex-col justify-end z-10">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-black/50 to-transparent -z-10">
+                            </div>
+
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">
+                                <span
+                                    class="material-symbols-outlined text-[15rem] lg:text-[20rem] text-blue-500/10">account_balance</span>
+                                <div
+                                    class="absolute inset-0 border border-blue-500/30 rounded-full scale-110 group-[.active]:animate-ping opacity-0 group-[.active]:opacity-100 animation-delay-500">
+                                </div>
+                            </div>
+
+                            <div
+                                class="relative z-10 transform translate-y-8 group-[.active]:translate-y-0 transition-transform duration-[800ms]">
+                                <div
+                                    class="w-16 h-1 bg-blue-500 mb-6 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                                </div>
+                                <h3 class="text-3xl lg:text-5xl font-bold text-white mb-4">Ledger Finality</h3>
+                                <p class="text-blue-50/70 text-base lg:text-lg max-w-md">The transaction is permanently
+                                    recorded on the immutable ledger for global auditing, completing the trust cycle.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Network Statistics -->
+        <section
+            class="py-16 lg:py-20 relative overflow-hidden border-t border-b border-white/5 bg-black/60 backdrop-blur-sm"
+            id="network-stats">
+            <!-- Background Elements -->
+            <canvas id="network-particles" class="absolute inset-0 pointer-events-none opacity-40"></canvas>
+            <div
+                class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-cyan-500/5 to-purple-500/5 mix-blend-screen pointer-events-none">
+            </div>
+
+            <div class="mx-auto max-w-screen-2xl px-6 relative z-10">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-8 lg:divide-x divide-white/10">
+                    <div class="text-center px-2 lg:px-4">
+                        <div
+                            class="h-1 w-12 bg-emerald-500 mx-auto mb-6 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]">
+                        </div>
+                        <h4
+                            class="text-4xl md:text-6xl font-bold text-white font-mono tracking-tighter flex justify-center items-center">
+                            <span class="counter-value" data-target="145200">0</span><span
+                                class="text-emerald-400 ml-1">+</span>
+                        </h4>
+                        <p class="mt-3 text-[10px] md:text-sm text-emerald-400 font-mono tracking-widest uppercase">
+                            Verified Identities</p>
+                    </div>
+
+                    <div
+                        class="text-center px-2 lg:px-4 relative before:content-[''] before:absolute before:left-0 before:top-1/4 before:bottom-1/4 before:w-[1px] before:bg-white/10 lg:before:hidden lg:border-none">
+                        <div
+                            class="h-1 w-12 bg-cyan-400 mx-auto mb-6 rounded-full shadow-[0_0_15px_rgba(34,211,238,0.5)]">
+                        </div>
+                        <h4
+                            class="text-4xl md:text-6xl font-bold text-white font-mono tracking-tighter flex justify-center items-center">
+                            <span class="counter-value" data-target="100">0</span><span
+                                class="text-cyan-400 ml-1">%</span>
+                        </h4>
+                        <p class="mt-3 text-[10px] md:text-sm text-cyan-400 font-mono tracking-widest uppercase">Fraud
+                            Prevented</p>
+                    </div>
+
+                    <div class="text-center px-2 lg:px-4">
+                        <div
+                            class="h-1 w-12 bg-blue-500 mx-auto mb-6 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+                        </div>
+                        <h4
+                            class="text-4xl md:text-6xl font-bold text-white font-mono tracking-tighter flex justify-center items-center">
+                            <span class="counter-value" data-target="99.99" data-decimals="2">0</span><span
+                                class="text-blue-400 ml-1">%</span>
+                        </h4>
+                        <p class="mt-3 text-[10px] md:text-sm text-blue-400 font-mono tracking-widest uppercase">Network
+                            Uptime</p>
+                    </div>
+
+                    <div
+                        class="text-center px-2 lg:px-4 relative before:content-[''] before:absolute before:left-0 before:top-1/4 before:bottom-1/4 before:w-[1px] before:bg-white/10 lg:before:hidden lg:border-none">
+                        <div
+                            class="h-1 w-12 bg-purple-500 mx-auto mb-6 rounded-full shadow-[0_0_15px_rgba(168,85,247,0.5)]">
+                        </div>
+                        <h4
+                            class="text-4xl md:text-6xl font-bold text-white font-mono tracking-tighter flex justify-center items-center">
+                            <span class="text-purple-400 mr-1">$</span><span class="counter-value"
+                                data-target="10">0</span><span class="text-purple-400 ml-1">M+</span>
+                        </h4>
+                        <p class="mt-3 text-[10px] md:text-sm text-purple-400 font-mono tracking-widest uppercase">
+                            Volume Secured</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 lg:py-24 px-6 relative overflow-hidden">
+            <div class="mx-auto max-w-screen-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                    <div class="space-y-10 relative z-10">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded border border-emerald-500/30 bg-emerald-950/30 text-emerald-400 text-xs font-mono tracking-[0.2em] uppercase">
+                            <span
+                                class="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#0df259]"></span>
+                            Live Network Status
+                        </div>
+                        <h3 class="text-5xl md:text-7xl font-bold text-white tracking-tight leading-none">
+                            Proof of <br />
+                            <span class="text-glow-cyan">Global Trust</span>
+                        </h3>
+                        <p class="text-xl text-slate-400 leading-relaxed max-w-lg">
+                            Witness real-time verification across our decentralized mesh. Each node represents a
+                            compliant
+                            institution validating identity-linked transactions.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6 mt-8">
+                            <div class="glass-monolith p-6 rounded-2xl border-l-4 border-emerald-500">
+                                <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-2">Latest Block Height
+                                </p>
+                                <p class="text-3xl font-mono font-bold text-white animate-pulse">#18,294,042</p>
+                            </div>
+                            <div class="glass-monolith p-6 rounded-2xl border-l-4 border-cyan-400">
+                                <p class="text-[10px] text-slate-500 uppercase tracking-widest mb-2">Verified Volume
+                                    (24h)</p>
+                                <p class="text-3xl font-mono font-bold text-white">$1.2B+</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="relative h-[500px] lg:h-[550px] w-full bg-midnight rounded-[40px] border border-white/5 shadow-2xl overflow-hidden group perspective-deep scale-90 lg:scale-100 transform-origin-center">
+                        <div class="absolute inset-0 opacity-20 transform rotate-x-12 scale-150 origin-bottom"
+                            style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 50px 50px;">
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(6,182,212,0.05),_transparent_80%)]">
+                        </div>
+                        <div
+                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] globe-wireframe flex items-center justify-center">
+                            <div class="w-32 h-32 bg-cyan-900/30 rounded-full blur-2xl animate-pulse"></div>
+                        </div>
+                        <div
+                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rounded-full animate-[spin_60s_linear_infinite]">
+                        </div>
+                        <div
+                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[300px] border border-white/5 rounded-[100%] rotate-12 animate-pulse">
+                        </div>
+                        <div class="absolute top-[30%] left-[30%] node-point group/node">
+                            <div class="data-stream w-[200px] -left-[200px]"></div>
+                        </div>
+                        <div class="absolute top-[25%] left-[60%] node-point bg-cyan-400 shadow-[0_0_15px_cyan]">
+                            <div
+                                class="data-stream w-[200px] -left-[200px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent">
+                            </div>
+                        </div>
+                        <div class="absolute bottom-[35%] left-[45%] node-point bg-purple-400 shadow-[0_0_15px_purple]">
+                            <div
+                                class="data-stream w-[200px] left-0 bg-gradient-to-r from-transparent via-purple-400 to-transparent">
+                            </div>
+                        </div>
+                        <div class="absolute bottom-[25%] right-[25%] node-point"></div>
+                        <div class="absolute top-[40%] right-[35%] node-point bg-orange-400 shadow-[0_0_15px_orange]">
+                        </div>
+                        <div
+                            class="absolute top-[18%] left-[62%] glass-monolith px-4 py-3 rounded-lg border border-cyan-500/30 z-40 animate-bounce [animation-duration:5s]">
+                            <p class="text-[10px] text-cyan-300 font-mono mb-1">NODE_ID: AP-NORTH-01</p>
+                            <p class="text-xs text-white font-bold">Syncing Ledger...</p>
+                        </div>
+                        <div
+                            class="absolute bottom-[40%] left-[47%] glass-monolith px-4 py-3 rounded-lg border border-purple-500/30 z-40 animate-bounce [animation-duration:7s]">
+                            <p class="text-[10px] text-purple-300 font-mono mb-1">NODE_ID: EU-WEST-09</p>
+                            <p class="text-xs text-white font-bold">Block #1829 Verified</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-16 lg:py-24 px-6">
+            <div class="mx-auto max-w-screen-2xl">
+                <div
+                    class="glass-monolith relative overflow-hidden rounded-[40px] p-10 md:p-20 text-center border-t border-white/20 shadow-2xl">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-emerald-900/40 via-obsidian to-cyan-900/40 opacity-80">
+                    </div>
+                    <div class="absolute inset-0 opacity-10"
+                        style="background-image: url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E')">
+                    </div>
+                    <div class="relative z-10 space-y-10 max-w-4xl mx-auto">
+                        <h2 class="text-5xl md:text-7xl font-bold text-white leading-tight tracking-tight">Ready to
+                            Secure Your
+                            <br /> <span class="text-glow-linear">Institutional Future?</span>
+                        </h2>
+                        <p class="text-xl text-slate-300 font-light max-w-2xl mx-auto">Join the growing network of banks
+                            and
+                            institutions leveraging identity-linked blockchain technology.</p>
+                        <div class="flex flex-wrap justify-center gap-6 pt-10">
+                            <button
+                                class="h-16 px-12 rounded-xl bg-white text-black font-bold text-lg hover:scale-105 hover:bg-emerald-400 hover:shadow-[0_0_50px_rgba(13,242,89,0.5)] transition-all duration-300">Get
+                                Started Now</button>
+                            <button
+                                class="h-16 px-12 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-lg hover:bg-white/10 hover:border-white/30 transition-all backdrop-blur-md">Contact
+                                Sales</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="border-t border-white/5 py-24 px-8 bg-black relative">
+        <div class="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(6,44,22,0.3))] pointer-events-none">
+        </div>
+        <div class="mx-auto max-w-screen-2xl relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+                <div class="col-span-1 md:col-span-2 space-y-8">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="h-10 w-10 flex items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                            <span class="material-symbols-outlined text-2xl">fingerprint</span>
+                        </div>
+                        <h2 class="text-2xl font-bold tracking-tight text-white uppercase">Digital Draft</h2>
+                    </div>
+                    <p class="text-slate-500 max-w-sm text-sm leading-relaxed">The global standard for identity-powered
+                        transaction
+                        protocols. Secure, transparent, and scalable for the next generation of finance.</p>
+                </div>
+                <div class="space-y-6">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest">Platform</h4>
+                    <ul class="space-y-4">
+                        <li><a class="text-sm text-slate-500 hover:text-emerald-400 transition-colors" href="#">Network
+                                Explorer</a></li>
+                        <li><a class="text-sm text-slate-500 hover:text-emerald-400 transition-colors"
+                                href="#">Governance</a>
+                        </li>
+                        <li><a class="text-sm text-slate-500 hover:text-emerald-400 transition-colors" href="#">API
+                                Docs</a></li>
+                        <li><a class="text-sm text-slate-500 hover:text-emerald-400 transition-colors"
+                                href="#">Ecosystem</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="space-y-6">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest">Company</h4>
+                    <ul class="space-y-4">
+                        <li><a class="text-sm text-slate-500 hover:text-emerald-400 transition-colors" href="#">About
+                                Us</a></li>
+                        <li><a class="text-sm text-slate-500 hover:text-emerald-400 transition-colors"
+                                href="#">Security</a></li>
+                        <li><a class="text-sm text-slate-500 hover:text-emerald-400 transition-colors"
+                                href="#">Institutional</a>
+                        </li>
+                        <li><a class="text-sm text-slate-500 hover:text-emerald-400 transition-colors"
+                                href="#">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] font-mono text-slate-600 uppercase tracking-widest">
+                <p>© 2026 Digital Draft Foundation. All rights reserved.</p>
+                <div class="flex gap-8">
+                    <a class="hover:text-white transition-colors" href="#">Twitter</a>
+                    <a class="hover:text-white transition-colors" href="#">LinkedIn</a>
+                    <a class="hover:text-white transition-colors" href="#">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Hologram Head Interaction
+        const head = document.getElementById('head-container');
+        document.addEventListener('mousemove', (e) => {
+            if (!head) return;
+            const { clientX, clientY } = e;
+            const { innerWidth, innerHeight } = window;
+
+            const rotateX = (clientY / innerHeight - 0.5) * 20;
+            const rotateY = (clientX / innerWidth - 0.5) * 20;
+
+            head.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        // Header Scroll Effect
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.add('py-3', 'bg-obsidian/80');
+                header.classList.remove('py-4', 'lg:py-6', 'bg-obsidian/60');
+            } else {
+                header.classList.remove('py-3', 'bg-obsidian/80');
+                header.classList.add('py-4', 'lg:py-6', 'bg-obsidian/60');
+            }
+        });
+
+        // System Interactive Tabs
+        const tabs = document.querySelectorAll('.pillar-tab');
+        const contents = document.querySelectorAll('.pillar-content');
+        const glow = document.getElementById('pillar-glow');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active from all tabs
+                tabs.forEach(t => {
+                    t.classList.remove('active', 'bg-white/5');
+                    t.querySelector('.tab-indicator').classList.add('scale-y-0', 'opacity-0');
+                    t.querySelector('.tab-bg').classList.remove('opacity-100');
+                    t.querySelector('.tab-bg').classList.add('opacity-0');
+
+                    // reset icon
+                    const icon = t.querySelector('.tab-icon');
+                    icon.className = 'h-12 w-12 rounded-xl bg-black/50 border border-white/10 flex items-center justify-center text-slate-400 transition-all tab-icon';
+                    if (t.dataset.color === 'emerald') icon.classList.add('group-hover:text-emerald-400', 'group-hover:border-emerald-500/30');
+                    if (t.dataset.color === 'cyan') icon.classList.add('group-hover:text-cyan-400', 'group-hover:border-cyan-500/30');
+                    if (t.dataset.color === 'purple') icon.classList.add('group-hover:text-purple-400', 'group-hover:border-purple-500/30');
+
+                    // reset text
+                    const title = t.querySelector('.tab-title');
+                    title.classList.remove('text-white');
+                    title.classList.add('text-slate-300');
+
+                    const subtitle = t.querySelector('.tab-subtitle');
+                    subtitle.classList.remove('opacity-100');
+                    subtitle.classList.add('opacity-0');
+                    subtitle.textContent = 'System Standby';
+                });
+
+                // Activate current
+                tab.classList.add('active', 'bg-white/5');
+                tab.querySelector('.tab-indicator').classList.remove('scale-y-0', 'opacity-0');
+                tab.querySelector('.tab-bg').classList.remove('opacity-0');
+                tab.querySelector('.tab-bg').classList.add('opacity-100');
+
+                const color = tab.dataset.color;
+                const icon = tab.querySelector('.tab-icon');
+                if (color === 'emerald') {
+                    icon.className = 'h-12 w-12 rounded-xl bg-black/50 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] tab-icon transition-all';
+                    if (glow) glow.className = 'absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] mix-blend-screen transition-colors duration-700';
+                } else if (color === 'cyan') {
+                    icon.className = 'h-12 w-12 rounded-xl bg-black/50 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)] tab-icon transition-all';
+                    if (glow) glow.className = 'absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] mix-blend-screen transition-colors duration-700';
+                } else if (color === 'purple') {
+                    icon.className = 'h-12 w-12 rounded-xl bg-black/50 border border-purple-500/30 flex items-center justify-center text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)] tab-icon transition-all';
+                    if (glow) glow.className = 'absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px] mix-blend-screen transition-colors duration-700';
+                }
+
+                const title = tab.querySelector('.tab-title');
+                title.classList.remove('text-slate-300');
+                title.classList.add('text-white');
+
+                const subtitle = tab.querySelector('.tab-subtitle');
+                subtitle.classList.remove('opacity-0', 'text-slate-500');
+                subtitle.classList.add('opacity-100', `text-${color}-400`);
+                subtitle.textContent = 'System Active';
+
+                // Show content
+                const targetId = tab.dataset.target;
+                contents.forEach(content => {
+                    if (content.id === targetId) {
+                        content.classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none');
+                        content.classList.add('opacity-100', 'translate-y-0');
+                    } else {
+                        content.classList.remove('opacity-100', 'translate-y-0');
+                        content.classList.add('opacity-0', 'translate-y-8', 'pointer-events-none');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Genesis Flow Accordion + Network Stats -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ===== GENESIS FLOW INTERACTIVE ACCORDION =====
+            const genesisAccordion = document.querySelector('.genesis-accordion');
+            const genesisSlices = document.querySelectorAll('.genesis-slice');
+            let autoRotateInterval = null;
+            let currentAutoIndex = 0;
+            let isHovering = false;
+
+            if (genesisAccordion && genesisSlices.length > 0) {
+                const setActiveSlice = (slice) => {
+                    genesisSlices.forEach(s => {
+                        s.classList.remove('active');
+                        s.style.flex = '1 1 0%';
+                    });
+                    slice.classList.add('active');
+                    slice.style.flex = '5 1 0%';
+                };
+
+                // Initialize first slice
+                setActiveSlice(genesisSlices[0]);
+
+                // Hover: expand the hovered slice
+                genesisSlices.forEach((slice, idx) => {
+                    slice.addEventListener('mouseenter', () => {
+                        isHovering = true;
+                        clearInterval(autoRotateInterval);
+                        setActiveSlice(slice);
+                    });
+                });
+
+                // When mouse leaves the entire accordion, restart auto-rotate
+                genesisAccordion.addEventListener('mouseleave', () => {
+                    isHovering = false;
+                    // Find which one is currently active and continue from there
+                    genesisSlices.forEach((s, i) => {
+                        if (s.classList.contains('active')) currentAutoIndex = i;
+                    });
+                    startAutoRotate();
+                });
+
+                // Auto-rotate function
+                function startAutoRotate() {
+                    clearInterval(autoRotateInterval);
+                    autoRotateInterval = setInterval(() => {
+                        if (isHovering) return;
+                        currentAutoIndex = (currentAutoIndex + 1) % genesisSlices.length;
+                        setActiveSlice(genesisSlices[currentAutoIndex]);
+                    }, 3000); // Rotate every 3 seconds
+                }
+
+                // Start auto-rotate on page load
+                startAutoRotate();
+            }
+
+            // ===== NETWORK STATISTICS COUNTERS =====
+            const counterElements = document.querySelectorAll('.counter-value');
+            if (counterElements.length > 0) {
+                const statsObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const el = entry.target;
+                            const targetVal = parseFloat(el.getAttribute('data-target'));
+                            const decimals = parseInt(el.getAttribute('data-decimals') || 0);
+                            const duration = 2500;
+                            const frameRate = 30;
+                            const totalFrames = duration / frameRate;
+                            let frame = 0;
+                            const counter = setInterval(() => {
+                                frame++;
+                                const progress = frame / totalFrames;
+                                const easeOut = 1 - Math.pow(1 - progress, 4);
+                                el.textContent = (targetVal * easeOut).toFixed(decimals);
+                                if (frame >= totalFrames) {
+                                    clearInterval(counter);
+                                    el.textContent = targetVal.toFixed(decimals);
+                                }
+                            }, frameRate);
+                            statsObserver.unobserve(el);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                counterElements.forEach(el => statsObserver.observe(el));
+            }
+
+            // ===== NETWORK PARTICLES CANVAS =====
+            const canvas = document.getElementById('network-particles');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let width, height, particles = [];
+                function resize() {
+                    width = canvas.parentElement.clientWidth;
+                    height = canvas.parentElement.clientHeight;
+                    canvas.width = width; canvas.height = height;
+                }
+                window.addEventListener('resize', resize);
+                resize();
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * width; this.y = Math.random() * height;
+                        this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5;
+                        this.size = Math.random() * 2;
+                        this.color = Math.random() > 0.5 ? 'rgba(16,185,129,0.5)' : 'rgba(34,211,238,0.5)';
+                    }
+                    update() {
+                        this.x += this.vx; this.y += this.vy;
+                        if (this.x < 0 || this.x > width) this.vx *= -1;
+                        if (this.y < 0 || this.y > height) this.vy *= -1;
+                    }
+                    draw() {
+                        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = this.color; ctx.fill();
+                    }
+                }
+                for (let i = 0; i < 50; i++) particles.push(new Particle());
+                function animate() {
+                    ctx.clearRect(0, 0, width, height);
+                    particles.forEach(p => { p.update(); p.draw(); });
+                    for (let i = 0; i < particles.length; i++) {
+                        for (let j = i + 1; j < particles.length; j++) {
+                            const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist < 100) {
+                                ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y);
+                                ctx.lineTo(particles[j].x, particles[j].y);
+                                ctx.strokeStyle = `rgba(255,255,255,${0.1 * (1 - dist / 100)})`;
+                                ctx.lineWidth = 0.5; ctx.stroke();
+                            }
+                        }
+                    }
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+        });
+    </script>
+</body>
+
+</html>
